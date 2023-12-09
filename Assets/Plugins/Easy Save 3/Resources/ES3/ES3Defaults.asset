@@ -32,6 +32,7 @@ MonoBehaviour:
     - Purchasing.Common
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
+    - Cinemachine
     - PPv2URPConverters
     - Analytics
     showAdvancedSettings: 0
