@@ -29,15 +29,11 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
+    - Purchasing.Common
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
-    - Autodesk.Fbx
-    - Cinemachine
-    - NavMeshComponents
-    - FbxBuildTestAssets
     - PPv2URPConverters
-    - NavMeshComponentsEditor
-    - Autodesk.Fbx.Editor
+    - Analytics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1
