@@ -1,0 +1,4 @@
+repository "Boomerang Warrior@atakandll@cloud"
+  path "/"
+    br "/main"
+    co "/main"
