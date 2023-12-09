@@ -16,6 +16,7 @@ namespace Runtime.Managers
         [SerializeField] private PlayerHealthController playerHealthController;
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
+        [SerializeField] private PlayerAttackController playerAttackController;
         
 
         #endregion
@@ -104,7 +105,7 @@ namespace Runtime.Managers
 
             playerAnimationController.IsActive = true;
 
-            //playerAttackController.IsActive = true;
+            playerAttackController.IsActive = true;
         }
 
         public void DeactiveController()
@@ -113,7 +114,7 @@ namespace Runtime.Managers
 
             playerAnimationController.IsActive = false;
 
-            //playerAttackController.IsActive = false;
+            playerAttackController.IsActive = false;
         }
 
         internal void OnHealthChange(float healthValue)
@@ -131,6 +132,12 @@ namespace Runtime.Managers
         internal void OnDeadPlayer()
         {
             CoreGameSignals.Instance.onFail?.Invoke();
+        }
+        internal void HitEnemy(GameObject enemyObject)
+        {
+            playerAttackController.TargetGameObject = enemyObject;
+
+            playerAttackController.TriggerAction();
         }
         
         internal void HitDamage(float damage)
