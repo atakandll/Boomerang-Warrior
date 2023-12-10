@@ -25,5 +25,8 @@ Demonstration of advanced programming paradigms and design patterns, crafted to 
   
 ![boomerangAtma](https://github.com/atakandll/Boomerang-Warrior/assets/130579265/467d69fe-e5e1-4c71-9e33-bd880e4480bc)
 
+![endgame](https://github.com/atakandll/Boomerang-Warrior/assets/130579265/703efb4b-2743-42b2-8d12-c2abc61f072a)
+
+
 ## Unity Version
 2021.3.18f1
