@@ -106,7 +106,7 @@ namespace Runtime.Managers
 
         internal void OnEnemyDead()
         {
-
+            ScoreSignals.Instance.onDeathScoreTaken?.Invoke();
             PushToPool(PoolObjectType.Enemy, gameObject);
         }
 

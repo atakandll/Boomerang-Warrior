@@ -29,7 +29,7 @@ namespace Runtime.Controllers.Player
 
             if (other.CompareTag("Coin"))
             {
-                //playerManager.HitCoin();
+                playerManager.HitCoin();
 
                 PushToPool(PoolObjectType.Coin, other.transform.parent.gameObject);
             }

@@ -146,6 +146,10 @@ namespace Runtime.Managers
 
             playerHealthController.OnTakeDamage();
         }
+        internal void HitCoin()
+        {
+            ScoreSignals.Instance.onScoreTaken?.Invoke();
+        }
         
         private Transform OnGetPlayerTransform()
         {
