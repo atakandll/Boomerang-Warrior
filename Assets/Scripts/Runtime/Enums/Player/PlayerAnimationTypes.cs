@@ -3,9 +3,9 @@ using UnityEditor.UI;
 
 namespace Runtime.Enums.Player
 {
-    public enum PlayerAnimationTypes
+    public enum PlayerAnimationType 
     {
-        Idle,
+        Other,
         Dead
     }
 }

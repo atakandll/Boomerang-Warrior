@@ -9,25 +9,27 @@ namespace Runtime.Managers
 {
     public class LevelManager : MonoBehaviour
     {
-        #region Self Variables
+        [SerializeField]
+        private Transform levelholder;
 
-        #region Serialized Variables
+        [SerializeField]
+        private LevelLoaderCommand levelLoaderCommand;
 
-        [SerializeField] private Transform levelHolder;
-        [SerializeField] private LevelLoaderCommand LevelLoaderCommand;
-        [SerializeField] private LevelDestroyerCommand LevelDestroyerCommand;
-
-        #endregion
-
-        #region Private Variables
+        [SerializeField]
+        private ClearActiveLevelCommand clearActiveLevelCommand;
 
         private int _levelID;
-        private string _dataPath = "Data/CD_LevelData";
+
+        private string _dataPath = "Data/Cd_LevelData";
+
         private LevelData _levelData;
 
-        #endregion
+        private void Awake()
+        {
+            //GetLevelData();
+        }
 
-        #endregion
+        private void GetLevelData() => _levelData = Resources.Load<Cd_LevelData>(_dataPath).LevelData[_levelID];
 
         private void OnEnable()
         {
@@ -36,16 +38,17 @@ namespace Runtime.Managers
 
         private void SubscribeEvents()
         {
+            CoreGameSignals.Instance.onLevelInitialize += OnLevelInitilize;
             CoreGameSignals.Instance.onPlay += OnPlay;
-            CoreGameSignals.Instance.onLevelInitialize += OnLevelInitialize;
             CoreGameSignals.Instance.onFail += OnFail;
             CoreGameSignals.Instance.onReset += OnReset;
         }
+
         private void UnsubscribeEvents()
         {
-            CoreGameSignals.Instance.onPlay -= OnPlay;
-            CoreGameSignals.Instance.onLevelInitialize -= OnLevelInitialize;
+            CoreGameSignals.Instance.onLevelInitialize -= OnLevelInitilize;
             CoreGameSignals.Instance.onFail -= OnFail;
+            CoreGameSignals.Instance.onPlay -= OnPlay;
             CoreGameSignals.Instance.onReset -= OnReset;
         }
 
@@ -58,27 +61,26 @@ namespace Runtime.Managers
         {
             CoreGameSignals.Instance.onLevelInitialize?.Invoke();
         }
-        private void GetLevelData() => _levelData = Resources.Load<CD_LevelData>(_dataPath).LevelData[_levelID];
+
+        private void OnLevelInitilize()
+        {
+            levelLoaderCommand.InitializeLevel(_levelID, levelholder);
+        }
 
         private void OnPlay()
         {
-            
-        }
-        private void OnLevelInitialize()
-        {
-            LevelLoaderCommand.Execute(_levelID, levelHolder);
-            
         }
 
         private void OnFail()
         {
-            LevelDestroyerCommand.Execute(levelHolder);
+            clearActiveLevelCommand.ClearActiveLevel(levelholder);
+
             CoreGameSignals.Instance.onReset?.Invoke();
         }
 
         private void OnReset()
         {
-            //save
+            SaveLoadSignals.Instance.onSave?.Invoke();
         }
 
         

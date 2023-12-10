@@ -7,31 +7,18 @@ namespace Runtime.Controllers.Enemy
 {
     public class EnemyMovementController : MonoBehaviour
     {
-        #region Self Variables
-
-        #region Public Variables
-
         public bool IsActive { get; set; }
-        
 
-        #endregion
+        [SerializeField]
+        private NavMeshAgent agent;
 
-        #region Serialized Variables
+        [SerializeField]
+        private EnemyManager enemyManager;
 
-        [SerializeField] private NavMeshAgent agent;
-        [SerializeField] private EnemyManager enemyManager;
-        
-        #endregion
-
-        #region Private Variables
-        
         private EnemyMovementData _enemyMovementData;
+
         private Transform _playerTransform;
-        
-        #endregion
-        
-        #endregion
-        
+
         internal void SetData(EnemyMovementData enemyMovementData)
         {
             _enemyMovementData = enemyMovementData;
@@ -54,7 +41,7 @@ namespace Runtime.Controllers.Enemy
         public void StartMovement()
         {
 
-            agent.speed = _enemyMovementData.Speed;
+            agent.speed = _enemyMovementData.speed;
 
             agent.SetDestination(_playerTransform.position);
         }

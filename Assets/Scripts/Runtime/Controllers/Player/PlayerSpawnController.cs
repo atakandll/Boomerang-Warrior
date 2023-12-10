@@ -6,33 +6,23 @@ using Runtime.Managers;
 using Runtime.Signals;
 using UnityEngine;
 
-namespace Runtime.Controllers.Player
+namespace Scripts.Level.Controller
 {
     public class PlayerSpawnController : ISpawner, IPushObject, IPullObject
     {
-        #region Self Variables
-
-        #region Public Variables
-
         public bool IsActivating { get; set; }
-        
-        #endregion
 
-        #region Private Variables
-
-        private List<GameObject> _spawnedObject = new List<GameObject>();
         private SpawnManager _spawnManager;
+
         private PlayerSpawnData _playerSpawnData;
 
-        #endregion
+        private List<GameObject> _spawnedObject = new();
 
-        #endregion
-        
         public PlayerSpawnController(SpawnManager spawnManager)
         {
             _spawnManager = spawnManager;
 
-            _playerSpawnData = _spawnManager.SpawnData.PlayerSpawnData;
+            _playerSpawnData = _spawnManager.SpawnData.playerSpawnData;
         }
 
         public void TriggerAction()
@@ -68,6 +58,5 @@ namespace Runtime.Controllers.Player
         {
             PoolSignals.Instance.onReleaseObjectFromPool.Invoke(poolObjectType, obj);
         }
-
     }
 }

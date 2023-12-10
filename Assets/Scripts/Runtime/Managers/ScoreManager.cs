@@ -7,19 +7,10 @@ namespace Runtime.Managers
 {
     public class ScoreManager : MonoBehaviour
     {
-        #region Self Variables
+        private string _dataPath = "Data/Cd_ScoreData";
 
-        #region Private Variables
-
-        private string _dataPath = "Data/CD_ScoreData";
         private ScoreData _scoreData;
 
-
-
-        #endregion
-
-        #endregion
-        
         private void Awake()
         {
             GetData();
@@ -27,7 +18,7 @@ namespace Runtime.Managers
 
         public void GetData()
         {
-            _scoreData = Resources.Load<CD_ScoreData>(_dataPath).ScoreData;
+            _scoreData = Resources.Load<Cd_ScoreData>(_dataPath).ScoreData;
         }
 
         private void OnEnable() => SubscribeEvents();
@@ -53,22 +44,22 @@ namespace Runtime.Managers
 
         private void InitData()
         {
-            UISignals.Instance.onlastCoinScore?.Invoke(_scoreData.LastCoinScore);
-            UISignals.Instance.onlastCoinScore?.Invoke(_scoreData.LastDeathScore);
+            UISignals.Instance.onPrintLastGoldScore?.Invoke(_scoreData.LastGoldScore);
+            UISignals.Instance.onPrintLastDeathScore?.Invoke(_scoreData.LastDeathScore);
         }
 
         private void OnScoreTaken()
         {
-            _scoreData.LastCoinScore++;
+            _scoreData.LastGoldScore++;
 
-            UISignals.Instance.onlastCoinScore?.Invoke(_scoreData.LastCoinScore);
+            UISignals.Instance.onPrintLastGoldScore?.Invoke(_scoreData.LastGoldScore);
         }
 
         private void OnDeathScoreTaken()
         {
             _scoreData.LastDeathScore++;
 
-            UISignals.Instance.onLastDeathScore?.Invoke(_scoreData.LastDeathScore);
+            UISignals.Instance.onPrintLastDeathScore?.Invoke(_scoreData.LastDeathScore);
         }
     }
 }

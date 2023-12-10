@@ -7,6 +7,7 @@ namespace Runtime.Signals
     public class InputSignals : MonoSingleton<InputSignals>
     {
         public UnityAction<float, Vector3> onInputTouch = delegate { };
+
         public UnityAction onInputReleased = delegate { };
     }
 }

@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -11,21 +12,21 @@ TagManager:
   - 
   - Water
   - UI
-  - Bullet
-  - Boomerang
-  - BulletPhysic
-  - BoomerangPhysic
+  - 
+  - 
+  - 
+  - 
   - Ground
   - Player
-  - PlayerDetect
   - PlayerPhysic
+  - PlayerDetect
   - Enemy
   - EnemyPhysic
+  - BulletPhysic
+  - Bullet
+  - Boomerang
+  - BoomerangPhysic
   - Coin
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 

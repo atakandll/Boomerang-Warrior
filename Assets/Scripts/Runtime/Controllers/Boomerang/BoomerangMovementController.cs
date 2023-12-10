@@ -10,15 +10,7 @@ namespace Runtime.Controllers.Boomerang
 {
     public class BoomerangMovementController : MonoBehaviour, IPushObject
     {
-        #region Self Variables
-
-        #region Public Variables
-
-        public bool IsActive { get; set; }
-        
-        #endregion
-
-        #region Private Variables
+      public bool IsActive { get; set; }
 
         private BoomerangData _boomerangData;
 
@@ -58,10 +50,6 @@ namespace Runtime.Controllers.Boomerang
 
         private bool isFinishMovement;
 
-        #endregion
-
-        #endregion
-
         internal void SetData(BoomerangData boomerangData, Transform target)
         {
             _boomerangData = boomerangData;
@@ -99,13 +87,13 @@ namespace Runtime.Controllers.Boomerang
 
         private void Rotate()
         {
-            transform.DORotate(new Vector3(0, 360 * _boomerangData.Rotations, 0), _boomerangData.Duration, RotateMode.WorldAxisAdd)
+            transform.DORotate(new Vector3(0, 360 * _boomerangData.rotations, 0), _boomerangData.duration, RotateMode.WorldAxisAdd)
                 .SetLoops(-1, LoopType.Restart);
         }
 
         private void Move(Vector3[] waypoints)
         {
-            transform.DOLocalPath(waypoints, (_boomerangData.ArrivalTime)).SetEase(Ease.InOutSine).OnComplete(() => isFinishMovement = true);
+            transform.DOLocalPath(waypoints, (_boomerangData.arrivalTime)).SetEase(Ease.InOutSine).OnComplete(() => isFinishMovement = true);
         }
 
         private int SelectWaypoint()
@@ -121,14 +109,14 @@ namespace Runtime.Controllers.Boomerang
             }
         }
 
-        private void DisableObject()    
+        private void DisableObject()
         {
             PushToPool(PoolObjectType.Boomerang, gameObject);
         }
 
         public void PushToPool(PoolObjectType poolObjectType, GameObject obj)
         {
-            PoolSignals.Instance.onReleaseObjectFromPool?.Invoke(poolObjectType, obj);
+            PoolSignals.Instance.onReleaseObjectFromPool(poolObjectType, obj);
         }
     }
 }

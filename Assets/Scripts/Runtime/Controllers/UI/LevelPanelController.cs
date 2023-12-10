@@ -1,4 +1,5 @@
-﻿using Runtime.Managers;
+﻿using Runtime.Extensions;
+using Runtime.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,31 +9,31 @@ namespace Runtime.Controllers.UI
 {
     public class LevelPanelController : MonoBehaviour
     {
-        #region Self Variables
+        [SerializeField]
+        private UIManager manager;
 
-        #region Serialized Variables
+        [SerializeField]
+        private TextMeshProUGUI gold;
 
-        [SerializeField] private TextMeshProUGUI coin;
-        [SerializeField] private TextMeshProUGUI deathCount;
-        [SerializeField] private Image image;
+        [SerializeField]
+        private TextMeshProUGUI deadCount;
 
-        #endregion
+        [SerializeField]
+        private Image image;
 
-        #endregion
-
-        internal void SetCoinScore(int coinValue) =>  coin.text = coinValue.ToString();
-
-        internal void SetDeathScore(int deathCountvalue) => deathCount.text = deathCountvalue.ToString();
-
-        internal void SetFillValueHealth(float health)
+        internal void InitGoldScore(int value)
         {
-            image.fillAmount = CalculationRationHealth(health,0,100,0,1);
+            gold.text = value.ToString();
         }
 
-        private float CalculationRationHealth(float value, float inMin, float inMax, float outMin, float outMax)
+        internal void PrintHealth(float health)
         {
-            float result = (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-            return result;
+            image.fillAmount = SelfExtetions.Map(health, 0, 100, 0, 1);
+        }
+
+        internal void InitDeathScore(int value)
+        {
+            deadCount.text = value.ToString();
         }
     }
 }

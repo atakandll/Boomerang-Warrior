@@ -8,64 +8,52 @@ namespace Runtime.Managers
 {
     public class UIManager : MonoBehaviour
     {
-        #region Self Variables
+        [SerializeField]
+        private UIPanelController uIPanelController;
 
-        #region Serialized Variables
+        [SerializeField]
+        private LevelPanelController levelPanelController;
 
-        [SerializeField] private UIPanelController uiPanelController;
-        [SerializeField] private LevelPanelController levelPanelController;
-        [SerializeField] private FailPanelController failPanelController;
-        
-        #endregion
-
-        #region Private Variables
+        [SerializeField]
+        private FailPanelController failPanelController;
 
         private int _lastDeathScore;
 
-        #endregion
-
-        #endregion
-
-        private void OnEnable()
-        {
-            SubscribeEvents();
-        }
+        private void OnEnable() => SubscribeEvents();
 
         private void SubscribeEvents()
         {
             UISignals.Instance.onOpenPanel += OnOpenPanel;
             UISignals.Instance.onClosePanel += OnClosePanel;
-            UISignals.Instance.onlastCoinScore += OnlastCoinScore;
-            UISignals.Instance.onHealth += OnHealth;
-            UISignals.Instance.onLastDeathScore += OnLastDeathScore;
-            
+            UISignals.Instance.onPrintLastGoldScore += OnInitLastGoldScore;
+            UISignals.Instance.onHealthDecrase += OnHealthDecrase;
+            UISignals.Instance.onPrintLastDeathScore += OnPrintLastDeathScore;
+
+            CoreGameSignals.Instance.onLevelInitialize += OnLevelInitilize;
             CoreGameSignals.Instance.onPlay += OnPlay;
-            CoreGameSignals.Instance.onLevelInitialize += OnLevelInitialize;
             CoreGameSignals.Instance.onFail += OnFail;
-            
         }
 
         private void UnsubscribeEvents()
         {
             UISignals.Instance.onOpenPanel -= OnOpenPanel;
             UISignals.Instance.onClosePanel -= OnClosePanel;
-            UISignals.Instance.onlastCoinScore -= OnlastCoinScore;
-            UISignals.Instance.onHealth -= OnHealth;
-            UISignals.Instance.onLastDeathScore -= OnLastDeathScore;
-            
-            CoreGameSignals.Instance.onPlay -= OnPlay;
-            CoreGameSignals.Instance.onLevelInitialize -= OnLevelInitialize;
+            UISignals.Instance.onPrintLastGoldScore -= OnInitLastGoldScore;
+            UISignals.Instance.onHealthDecrase -= OnHealthDecrase;
+            UISignals.Instance.onPrintLastDeathScore -= OnPrintLastDeathScore;
+
+            CoreGameSignals.Instance.onLevelInitialize -= OnLevelInitilize;
             CoreGameSignals.Instance.onFail -= OnFail;
+            CoreGameSignals.Instance.onPlay -= OnPlay;
         }
 
-        private void OnDisable()
-        {
-            UnsubscribeEvents();
-        }
-        private void OnOpenPanel(UIPanelTypes panelTypes) => uiPanelController.ChangePanel(panelTypes, true);
-        internal void OnClosePanel(UIPanelTypes panelTypes) => uiPanelController.ChangePanel(panelTypes, false);
+        private void OnDisable() => UnsubscribeEvents();
 
-        private void OnLevelInitialize()
+        private void OnOpenPanel(UIPanelTypes panelType) => uIPanelController.ChangePanel(panelType, true);
+
+        internal void OnClosePanel(UIPanelTypes panelType) => uIPanelController.ChangePanel(panelType, false);
+
+        private void OnLevelInitilize()
         {
             OnOpenPanel(UIPanelTypes.StartPanel);
         }
@@ -78,37 +66,51 @@ namespace Runtime.Managers
         private void OnPlay()
         {
             OnClosePanel(UIPanelTypes.StartPanel);
+
             OnOpenPanel(UIPanelTypes.LevelPanel);
         }
 
-        public void ChangePanelStatusOnStartAsSetting(UIPanelTypes panelTypes)
+        public void ChangePanelStatusOnStartAsSetting(UIPanelTypes uIPanelType)
         {
-            OnOpenPanel(panelTypes);
+            OnOpenPanel(uIPanelType);
+
             OnClosePanel(UIPanelTypes.StartPanel);
         }
 
         private void OnFail()
         {
-            failPanelController.SetLastDeathScore(_lastDeathScore);
+            failPanelController.SetDeathScore(_lastDeathScore);
+
             OnOpenPanel(UIPanelTypes.FailPanel);
+            
+            OnClosePanel(UIPanelTypes.LevelPanel);
         }
-        internal void ChangePanelStatusOnPressTryAgain(UIPanelTypes panelTypes)
+
+        internal void ChangePanelStatusOnPressTryAgain(UIPanelTypes uIPanelType)
         {
-           OnClosePanel(panelTypes);
-           OnOpenPanel(UIPanelTypes.StartPanel);
-           
-           CoreGameSignals.Instance.onLevelInitialize?.Invoke();
-           CoreGameSignals.Instance.onPlay?.Invoke();
+            OnClosePanel(uIPanelType);
+
+            OnOpenPanel(UIPanelTypes.StartPanel);
+
+            CoreGameSignals.Instance.onLevelInitialize?.Invoke();
+
+            CoreGameSignals.Instance.onPlay?.Invoke();
         }
 
-        private void OnlastCoinScore(int value) => levelPanelController.SetCoinScore(value);
-        private void OnHealth(float value) => levelPanelController.SetFillValueHealth(value);
+        private void OnHealthDecrase(float health)
+        {
+            levelPanelController.PrintHealth(health);
+        }
 
-        private void OnLastDeathScore(int value)
+        internal void OnInitLastGoldScore(int value)
+        {
+            levelPanelController.InitGoldScore(value);
+        }
+
+        private void OnPrintLastDeathScore(int value)
         {
             _lastDeathScore = value;
-            levelPanelController.SetDeathScore(value);
-            
+            levelPanelController.InitDeathScore(value);
         }
 
 

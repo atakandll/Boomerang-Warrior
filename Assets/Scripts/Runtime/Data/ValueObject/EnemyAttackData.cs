@@ -3,9 +3,8 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct EnemyAttackData
+    public class EnemyAttackData
     {
         public int Periods;
-
     }
 }

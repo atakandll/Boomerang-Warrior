@@ -12,41 +12,42 @@ namespace Runtime.Managers
 {
     public class EnemyManager : MonoBehaviour, IPushObject
     {
-        #region Self Variables
+       [SerializeField]
+        private EnemyMovementController enemyMovementController;
 
-        #region Serialized Variables
+        [SerializeField]
+        private EnemyAnimationController enemyAnimationController;
 
-        [SerializeField] private EnemyMovementController enemyMovementController;
-        [SerializeField] private EnemyAnimationController enemyAnimationController;
-        [SerializeField] private EnemyAttackController enemyAttackController;
-        [SerializeField] private EnemyPhysicController enemyPhysicController;
-        
+        [SerializeField]
+        private EnemyAttackController enemyAttackController;
 
-        #endregion
-
-        #region Private Variables
+        [SerializeField]
+        private EnemyPhysicController enemyPhysicController;
 
         private EnemyData _enemyData;
+
         private Transform _playerTransform;
-        private string DataPath => "Data/CD_EnemyData";
 
-        #endregion
+        public string DataPath => "Data/Cd_EnemyData";
 
-        #endregion
-
-        private void Awake()
+        public void Awake()
         {
             GetData();
+
             SetData();
         }
-        public void GetData() => _enemyData = Resources.Load<CD_EnemyData>(DataPath).EnemyData;
+
+        public void GetData() => _enemyData = Resources.Load<Cd_EnemyData>(DataPath).EnemyData;
 
         public void SetData()
         {
             enemyMovementController.SetData(_enemyData.EnemyMovementData);
+
             enemyAnimationController.SetData(_enemyData.EnemyAnimationData);
+
             enemyAttackController.SetData(_enemyData.EnemyAttackData);
         }
+
         public void OnEnable()
         {
             ActiveteController();
@@ -85,7 +86,7 @@ namespace Runtime.Managers
 
         internal void EnterDetectArea()
         {
-            enemyAnimationController.PlayAttackAnim();
+            enemyAnimationController.PlayAttackAnimation();
         }
 
         internal void OnReadyToAttack()
@@ -101,12 +102,13 @@ namespace Runtime.Managers
 
             enemyMovementController.IsActive = false;
 
-            enemyAnimationController.PlayDeadAnim();
+            enemyAnimationController.PlayDyingAnimation();
         }
 
-        internal void OnEnemyDead()
+        internal void OnEnemyDying()
         {
             ScoreSignals.Instance.onDeathScoreTaken?.Invoke();
+
             PushToPool(PoolObjectType.Enemy, gameObject);
         }
 

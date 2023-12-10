@@ -1,9 +1,9 @@
 ﻿namespace Runtime.Enums.Enemy
 {
-    public enum EnemyAnimationTypes
+    public enum EnemyAnimationType 
     {
         Run,
-        Attack,
-        Dead
+        Die,
+        Attack
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct CoinSpawnData
+    public class CollectableSpawnData
     {
-        public int SpawnLimit;
-        public GameObject CoinSpawnZone;
+        public int spawnLimit;
 
+        public GameObject collectableSpawnZone;
     }
 }

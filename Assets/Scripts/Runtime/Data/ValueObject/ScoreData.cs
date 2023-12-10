@@ -3,10 +3,10 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct ScoreData
+    public class ScoreData
     {
         public int LastDeathScore;
-        public int LastCoinScore;
 
+        public int LastGoldScore;
     }
 }

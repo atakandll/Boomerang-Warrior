@@ -11,48 +11,41 @@ namespace Runtime.Managers
 {
     public class PoolManager : MonoBehaviour
     {
-        #region Self Variables
+        [SerializeField]
+        private Cd_ObjectData cdObjectDatas;//gidecek
 
-        #region Serialized Variables
+        [SerializeField]
+        private SerializedDictionary<PoolObjectType, Queue<GameObject>> objectPool;
 
-        [SerializeField] private CD_PoolData CD_PoolData;
-        [SerializeField] private SerializedDictionary<PoolObjectType, Queue<GameObject>> objectPool;
-        [SerializeField] private GameObject poolHolder;
-        
-
-
-        #endregion
-
-        #region Private Variables
+        [SerializeField]
+        private GameObject poolholder;
 
         private GameObject _outGoingObject;
+
         private readonly int _loadPoolCount = Enum.GetNames(typeof(PoolObjectType)).Length;
+
         private int poolCount = 0;
-        
 
-        #endregion
-
-        #endregion
-        
         private void Awake()
         {
             objectPool = new SerializedDictionary<PoolObjectType, Queue<GameObject>>();
 
             for (; poolCount < _loadPoolCount; poolCount++)
             {
-                objectPool.Add(CD_PoolData.ObjectData[poolCount].PoolObjectType, new Queue<GameObject>());
+                objectPool.Add(cdObjectDatas.ObjectData[poolCount].poolObjectType, new Queue<GameObject>());
 
-                for (int j = 0; j < CD_PoolData.ObjectData[poolCount].PoolCount; j++)
+                for (int j = 0; j < cdObjectDatas.ObjectData[poolCount].PoolCount; j++)
                 {
-                    var poolObj = Instantiate(CD_PoolData.ObjectData[poolCount].PoolObject, poolHolder.transform);
+                    var poolObj = Instantiate(cdObjectDatas.ObjectData[poolCount].PoolObject, poolholder.transform);
 
                     poolObj.SetActive(false);
 
-                    objectPool[CD_PoolData.ObjectData[poolCount].PoolObjectType].Enqueue(poolObj);
+                    objectPool[cdObjectDatas.ObjectData[poolCount].poolObjectType].Enqueue(poolObj);
                 }
             }
         }
 
+        #region EventSubscribtion
 
         private void OnEnable() => SubscribeEvents();
 
@@ -70,12 +63,13 @@ namespace Runtime.Managers
 
         private void OnDisable() => UnsubscribeEvents();
 
+        #endregion EventSubscribtion
 
         private GameObject OnGetObjcetFromPool(PoolObjectType type)
         {
-            if (objectPool[type].Count == 0 && CD_PoolData.ObjectData[(int)type].PoolType == PoolType.Dynamic)
+            if (objectPool[type].Count == 0 && cdObjectDatas.ObjectData[(int)type].poolType == PoolType.Dynamic)
             {
-                _outGoingObject = Instantiate(CD_PoolData.ObjectData[(int)type].PoolObject, poolHolder.transform);
+                _outGoingObject = Instantiate(cdObjectDatas.ObjectData[(int)type].PoolObject, poolholder.transform);
             }
             else
             {

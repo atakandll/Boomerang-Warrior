@@ -1,9 +1,9 @@
 ﻿namespace Runtime.Enums.Spawn
 {
-    public enum SpawnControllerType
+    public enum SpawnControllerType 
     {
-        CoinSpawn,
+        CollectableSpawn,
         PlayerSpawn,
-        EnemySpawn
+        EnemySpawn,
     }
 }

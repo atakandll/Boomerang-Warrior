@@ -3,9 +3,8 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct EnemyAnimationData
+    public class EnemyAnimationData
     {
-        public float AnimationSpeed;
-
+        public float animationSpeed;
     }
 }

@@ -12,56 +12,48 @@ namespace Runtime.Managers
 {
     public class BulletManager : MonoBehaviour
     {
-        #region Self Variables
+       public Transform Target { get; set; }
 
-        #region Public Variables
-
-        public Transform Target { get; set; }
         public float Damage { get; set; }
 
-        #endregion
+        [SerializeField]
+        private BulletMovementController bulletMovementController;
 
-        #region Serialized Variables
-
-        [SerializeField] private BulletMovementController bulletMovementController;
-
-        #endregion
-
-        #region Private Variables
-        
         private float _timer;
+
+        public const string _dataPath = "Data/Cd_BulletData";
+
         private BulletData _bulletData;
-        private string dataPath = "Data/CD_BulletData";
-        
-
-        #endregion
-
-        #endregion
 
         private void Awake()
         {
             GetData();
+
             SetData();
         }
-        private void GetData() => _bulletData = Resources.Load<CD_BulletData>(dataPath).BulletData;
+
+        private void GetData() => _bulletData = Resources.Load<Cd_BulletData>(_dataPath).BulletData;
 
         private void SetData()
         {
             _timer = 0;
 
-            Damage = _bulletData.Damage;
+            Damage = _bulletData.damage;
 
             bulletMovementController.BulletData = _bulletData;
         }
+
         public void OnEnable()
         {
             SubscribeEvents();
             ActiveteController();
         }
+
         private void SubscribeEvents()
         {
             CoreGameSignals.Instance.onReset += OnReset;
         }
+
         private void UnsubscribeEvents()
         {
             CoreGameSignals.Instance.onReset -= OnReset;
@@ -72,6 +64,7 @@ namespace Runtime.Managers
             DeactiveController();
             UnsubscribeEvents(); ;
         }
+
         private void Start()
         {
             TriggerController();
@@ -83,6 +76,7 @@ namespace Runtime.Managers
 
             bulletMovementController.TriggerAction();
         }
+
         public void ActiveteController()
         {
             bulletMovementController.IsActive = true;
@@ -92,10 +86,12 @@ namespace Runtime.Managers
         {
             bulletMovementController.IsActive = false;
         }
+
         private void OnReset()
         {
             PushToPool(PoolObjectType.Bullet, gameObject);
         }
+
         private void Update()
         {
             if (!gameObject.activeInHierarchy) return;

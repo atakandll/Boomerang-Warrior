@@ -5,34 +5,25 @@ namespace Runtime.Controllers.Bullet
 {
     public class BulletMovementController : MonoBehaviour
     {
-        #region Self Variables
-
-        #region Public Variables
-
         public bool IsActive { get; set; }
+
         public BulletData BulletData { get; set; }
+
         public Transform Target { get; set; }
 
-        #endregion
-
-        #region Serialized Variables
-
-        [SerializeField] private Rigidbody bulletRigidbody;
-
-        #endregion
-
-        #endregion
+        [SerializeField]
+        private Rigidbody bulletRigdbody;
 
         public void TriggerAction()
         {
-            if(!IsActive) return;
-            
-            MoveAsFireBall();
+            if (!IsActive) return;
+
+            MoveAsFireBal();
         }
 
-        private void MoveAsFireBall()
+        private void MoveAsFireBal()
         {
-            bulletRigidbody.AddForce(Target.forward*BulletData.Speed, ForceMode.Impulse);
+            bulletRigdbody.AddForce(Target.forward * BulletData.Speed, ForceMode.Impulse);
         }
     }
 }

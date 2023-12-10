@@ -3,9 +3,10 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct BulletData
+    public class BulletData
     {
-        public float Damage;
+        public float damage;
+
         public float Speed;
     }
 }

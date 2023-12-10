@@ -7,15 +7,8 @@ namespace Runtime.Controllers.Player
 {
     public class PlayerDetectController : MonoBehaviour
     {
-        #region Self Variables
-
-        #region Serialized Variables
-
-        [SerializeField] private PlayerManager playerManager;
-
-        #endregion
-
-        #endregion
+        [SerializeField]
+        private PlayerManager playerManager;
 
         private void OnTriggerEnter(Collider other)
         {

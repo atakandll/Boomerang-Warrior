@@ -12,33 +12,23 @@ namespace Runtime.Managers
 {
     public class SpawnManager : MonoBehaviour
     {
-        #region Self Variables
-
-        #region Public Variables
-
         public SpawnData SpawnData { get; set; }
-        public Dictionary<PoolObjectType, GameObject> spawnedContainer { get; set;}
 
-        #endregion
+        public Dictionary<PoolObjectType, GameObject> spawnedContainer { get; set; }
 
-        #region Private Variables
-        
-        private string dataPath = "Data/CD_SpawnData";
-        
+        public string DataPath => "Data/Cd_SpawnData";
+
         private List<ISpawner> _activateable = new List<ISpawner>();
-        
-        #endregion
 
-        #endregion
-
-        private void Awake()
+        public void Awake()
         {
             GetData();
 
             InitAllController();
         }
 
-        public void GetData() => SpawnData = Resources.Load<CD_SpawnData>(dataPath).SpawnData;
+        public void GetData() => SpawnData = Resources.Load<Cd_SpawnData>(DataPath).SpawnData;
+
         private void InitAllController()
         {
             foreach (SpawnControllerType shopType in Enum.GetValues(typeof(SpawnControllerType)))
@@ -50,6 +40,7 @@ namespace Runtime.Managers
                 _activateable.Add(shop);
             }
         }
+
         public void OnEnable()
         {
             SubscribeEvents();

@@ -8,16 +8,9 @@ namespace Runtime.Controllers.Bullet
 {
     public class BulletPhysicController : MonoBehaviour, IPushObject
     {
-        #region Self Variables
+        [SerializeField]
+        private BulletManager bullutManager;
 
-        #region Serialized Variables
-
-        [SerializeField] private BulletManager bulletManager;
-
-        #endregion
-
-        #endregion
-        
         private void OnTriggerEnter(Collider other)
         {
             PushToPool(PoolObjectType.Bullet, transform.parent.gameObject);
@@ -25,7 +18,7 @@ namespace Runtime.Controllers.Bullet
 
         public float TakeDamage()
         {
-            return bulletManager.Damage;
+            return bullutManager.Damage;
         }
 
         public void PushToPool(PoolObjectType poolObjectType, GameObject obj)

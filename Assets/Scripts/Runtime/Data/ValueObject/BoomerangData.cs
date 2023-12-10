@@ -3,11 +3,14 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct BoomerangData
+    public class BoomerangData
     {
-        public int Damage;
-        public int ArrivalTime;
-        public int Rotations;
-        public float Duration;
+        public int damage;
+
+        public int arrivalTime;
+
+        public int rotations;
+
+        public float duration;
     }
 }

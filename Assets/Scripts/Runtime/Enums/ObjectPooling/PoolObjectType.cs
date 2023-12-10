@@ -4,8 +4,9 @@
     {
         Enemy,
         Player,
-        Coin,
+        SmallGold,
         Boomerang,
         Bullet
+
     }
 }

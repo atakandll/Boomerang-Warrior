@@ -2,34 +2,32 @@
 using Runtime.Controllers.Player;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
+using Runtime.Interfaces;
 using Runtime.Signals;
 using UnityEngine;
 
 namespace Runtime.Managers
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : MonoBehaviour, IManagable
     {
-        #region Self Variables
+         [SerializeField]
+        private PlayerAttackController playerAttackController;
 
-        #region Serialized Variables
+        [SerializeField]
+        private PlayerHealthController playerHealthController;
 
-        [SerializeField] private PlayerHealthController playerHealthController;
-        [SerializeField] private PlayerMovementController playerMovementController;
-        [SerializeField] private PlayerAnimationController playerAnimationController;
-        [SerializeField] private PlayerAttackController playerAttackController;
-        
+        [SerializeField]
+        private PlayerMovementController playerMovementController;
 
-        #endregion
-
-        #region Private Variables
+        [SerializeField]
+        private PlayerAnimationController playerAnimationController;
 
         private PlayerData _playerData;
-        private float _camDirection;
-        private string DataPath => "Data/CD_PlayerData";
 
-        #endregion
+        private float _camDiraction;
 
-        #endregion
+        public string DataPath => "Data/Cd_PlayerData";
+
         public void Awake()
         {
             GetData();
@@ -37,53 +35,62 @@ namespace Runtime.Managers
             SetData();
         }
 
-        public void GetData() => _playerData = Resources.Load<CD_PlayerData>(DataPath).PlayerData;
+        public void GetData() => _playerData = Resources.Load<Cd_PlayerData>(DataPath).PlayerData;
 
         public void SetData()
         {
-            playerMovementController.SetData(_playerData.PlayerMovementData, _camDirection);
+            playerMovementController.SetData(_playerData.PlayerMovementData, _camDiraction);
 
             playerAnimationController.SetData(_playerData);
 
-            playerHealthController.SetData(_playerData.PlayerHealthData);
+            playerHealthController.SetData(_playerData.PlayerHealtData);
         }
 
-        private void OnEnable()
+        public void OnEnable()
         {
             SubscribeEvents();
+
             SetData();
+
             ActiveteController();
         }
 
-        private void SubscribeEvents()
+        public void SubscribeEvents()
         {
             InputSignals.Instance.onInputTouch += OnInputTouch;
+
             InputSignals.Instance.onInputReleased += OnInputReleased;
+
             PlayerSignals.Instance.onGetPlayerTransform += OnGetPlayerTransform;
         }
 
-        private void UnsubscribeEvents()
+        public void UnsubscribeEvents()
         {
             InputSignals.Instance.onInputTouch -= OnInputTouch;
+
             InputSignals.Instance.onInputReleased -= OnInputReleased;
+
             PlayerSignals.Instance.onGetPlayerTransform -= OnGetPlayerTransform;
         }
 
-        private void OnDisable()
+        public void OnDisable()
         {
-            UnsubscribeEvents();
             DeactiveController();
+
+            UnsubscribeEvents();
         }
-          private void Start()
+
+        private void Start()
         {
             TriggerController();
 
-            _camDirection = CameraSignals.Instance.onSpawnPlayer.Invoke(gameObject);
+            _camDiraction = CameraSignals.Instance.onSpawnPlayer.Invoke(gameObject);
         }
 
-        private void OnInputTouch(float direction, Vector3 joystick)
+        private void OnInputTouch(float diraction, Vector3 joystick)
         {
-            playerMovementController.Direction = direction;
+            
+            playerMovementController.Diraction = diraction;
 
             playerMovementController.JoystickDirection = joystick;
 
@@ -92,11 +99,12 @@ namespace Runtime.Managers
 
         private void OnInputReleased()
         {
+
         }
 
         public void TriggerController()
         {
-            playerAnimationController.SetIdleAnimation();
+            playerAnimationController.SetDefaultAnimation();
         }
 
         public void ActiveteController()
@@ -117,40 +125,42 @@ namespace Runtime.Managers
             playerAttackController.IsActive = false;
         }
 
-        internal void OnHealthChange(float healthValue)
+        internal void OnHealtDecrase(float healthValue)
         {
-            UISignals.Instance.onHealth?.Invoke(healthValue);
+            UISignals.Instance.onHealthDecrase?.Invoke(healthValue);
         }
 
         internal void PlayerDead()
         {
             DeactiveController();
 
-            playerAnimationController.PlayDeadAnimation();
+            playerAnimationController.PlayDadAnimation();
         }
 
         internal void OnDeadPlayer()
         {
             CoreGameSignals.Instance.onFail?.Invoke();
         }
+
         internal void HitEnemy(GameObject enemyObject)
         {
-            playerAttackController.TargetGameObject = enemyObject;
+            playerAttackController.TargetObject = enemyObject;
 
             playerAttackController.TriggerAction();
         }
-        
-        internal void HitDamage(float damage)
+
+        internal void HitDamager(float damage)
         {
             playerHealthController.SetDamage((int)damage);
 
             playerHealthController.OnTakeDamage();
         }
+
         internal void HitCoin()
         {
             ScoreSignals.Instance.onScoreTaken?.Invoke();
         }
-        
+
         private Transform OnGetPlayerTransform()
         {
             return transform;

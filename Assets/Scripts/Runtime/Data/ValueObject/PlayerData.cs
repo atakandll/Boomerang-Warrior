@@ -3,11 +3,14 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct PlayerData
+    public class PlayerData
     {
         public PlayerAnimationData PlayerAnimationData;
-        public PlayerAttackData PlayerAttackData;
+
         public PlayerMovementData PlayerMovementData;
-        public PlayerHealthData PlayerHealthData;
+
+        public PlayerHealtData PlayerHealtData;
+
+        public PlayerAttackData PlayerAttackData;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Runtime.Data.ValueObject;
 using Runtime.Enums.Player;
+using Runtime.Extensions;
 using Runtime.Managers;
 using UnityEngine;
 
@@ -7,56 +8,44 @@ namespace Runtime.Controllers.Player
 {
     public class PlayerAnimationController : MonoBehaviour
     {
-        #region Self Variables
-
-        #region Public Variables
-
         public bool IsActive { get; set; }
 
+        [SerializeField]
+        private Animator animator;
 
-        #endregion
+        [SerializeField]
+        private new Rigidbody rigidbody;
 
-        #region Serialized Variables
-
-        [SerializeField] private Animator animator;
-        [SerializeField] private new Rigidbody rigidbody;
-        [SerializeField] private PlayerManager playerManager;
-        
-
-        #endregion
-
-        #region Private Variables
+        [SerializeField]
+        private PlayerManager playerManager;
 
         private PlayerData _playerData;
 
-        #endregion
-
-        #endregion
-        
         internal void SetData(PlayerData playerData)
         {
             _playerData = playerData;
         }
+
         public void OnDeadPlayer()
         {
             playerManager.OnDeadPlayer();
         }
-        
-        internal void SetIdleAnimation()
+
+        internal void SetDefaultAnimation()
         {
-            ChangeAnimationType(PlayerAnimationTypes.Idle);
+            ChangeAnimationType(PlayerAnimationType.Other);
         }
-        
-        internal void PlayDeadAnimation()
+
+        internal void PlayDadAnimation()
         {
-            ChangeAnimationType(PlayerAnimationTypes.Dead);
+            ChangeAnimationType(PlayerAnimationType.Dead);
         }
-        
-        public void ChangeAnimationType(PlayerAnimationTypes playeranimationtype)
+
+        public void ChangeAnimationType(PlayerAnimationType playeranimationtype)
         {
             animator.Play(playeranimationtype.ToString());
         }
-        
+
         private void FixedUpdate()
         {
             PlayAnimation();
@@ -64,19 +53,13 @@ namespace Runtime.Controllers.Player
 
         internal void PlayAnimation()
         {
-            if(!IsActive) return;
-            
-            float currentSpeed = rigidbody.velocity.magnitude;
-            float clampedValue = CalculationRationValue(currentSpeed, 0, _playerData.PlayerMovementData.Speed, 0, 1f);
+            if (!IsActive) return;
+
+            float _currentSpeed = rigidbody.velocity.magnitude;
+
+            float clampedValue = SelfExtetions.Map(_currentSpeed, 0, _playerData.PlayerMovementData.Speed, 0, 1f);
+
             animator.SetFloat("Horizontal", clampedValue);
-        }
-        
-        private float CalculationRationValue(float value, float inMin, float inMax, float outMin, float outMax)
-        {
-
-            float mappedNumber = (((value - inMin) * (outMax - outMin)) / (inMax - inMin)) + outMin;
-
-            return mappedNumber;
         }
     }
 }

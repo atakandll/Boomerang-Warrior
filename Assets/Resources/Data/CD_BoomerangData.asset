@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b53f6fcab874c41ae03a07b4b08d325, type: 3}
-  m_Name: CD_BoomerangData
+  m_Name: Cd_BoomerangData
   m_EditorClassIdentifier: 
   BoomerangData:
-    Damage: 100
-    ArrivalTime: 3
-    Rotations: 10
-    Duration: 1
+    damage: 100
+    arrivalTime: 3
+    rotations: 10
+    duration: 1

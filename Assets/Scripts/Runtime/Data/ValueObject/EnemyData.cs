@@ -3,10 +3,12 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct EnemyData
+    public class EnemyData
     {
         public EnemyMovementData EnemyMovementData;
+
         public EnemyAnimationData EnemyAnimationData;
+
         public EnemyAttackData EnemyAttackData;
     }
 }

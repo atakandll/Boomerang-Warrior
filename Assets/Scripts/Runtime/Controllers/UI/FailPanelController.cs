@@ -8,17 +8,14 @@ namespace Runtime.Controllers.UI
 {
     public class FailPanelController : MonoBehaviour
     {
-        #region Self Variables
+        [SerializeField]
+        private UIManager manager;
 
-        #region Serialized Variables
+        [SerializeField]
+        private TextMeshProUGUI lastDeathScore;
 
-        [SerializeField] private UIManager manager;
-        [SerializeField] private TextMeshProUGUI lastDeathScore;
-        [SerializeField] private Button tryAgainButton;
-
-        #endregion
-
-        #endregion
+        [SerializeField]
+        private Button tryAgainButton;
 
         private void Start()
         {
@@ -29,16 +26,20 @@ namespace Runtime.Controllers.UI
         {
             InitButton();
         }
-        internal void SetLastDeathScore(int value) => lastDeathScore.text = value.ToString();
-        
+
+        internal void SetDeathScore(int value)
+        {
+            lastDeathScore.text = value.ToString();
+        }
+
         private void InitButton()
         {
             tryAgainButton.onClick.AddListener(delegate { ArangePanelStatus(UIPanelTypes.FailPanel); });
         }
 
-        private void ArangePanelStatus(UIPanelTypes panelTypes)
+        private void ArangePanelStatus(UIPanelTypes uIPanelType)
         {
-            manager.ChangePanelStatusOnPressTryAgain(panelTypes);
+            manager.ChangePanelStatusOnPressTryAgain(uIPanelType);
         }
     }
 }

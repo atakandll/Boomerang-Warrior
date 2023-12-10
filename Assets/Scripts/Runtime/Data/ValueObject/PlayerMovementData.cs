@@ -3,9 +3,10 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct PlayerMovementData
+    public class PlayerMovementData
     {
         public float Speed;
+
         public float TurnSpeed;
     }
 }

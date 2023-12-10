@@ -9,34 +9,21 @@ namespace Runtime.Controllers.Enemy
 {
     public class EnemyAttackController : MonoBehaviour
     {
-        #region Self Variables
-
-        #region Public Variables
-
         public bool IsActive { get; set; }
-        
 
-        #endregion
+        [SerializeField]
+        private GameObject spawnPosition;
 
-        #region Serialized Variables
+        [SerializeField]
+        private EnemyManager enemyManager;
 
-        [SerializeField] private GameObject spawnPosition;
-        [SerializeField] private EnemyManager enemyManager;
-        
-        #endregion
-
-        #region Private Variables
-        
         private EnemyAttackData _enemyAttackData;
-        
-        #endregion
-        
-        #endregion
+
         internal void SetData(EnemyAttackData enemyAttackData)
         {
             _enemyAttackData = enemyAttackData;
         }
-        
+
         public void TriggerToAction()
         {
             if (!IsActive) return;
@@ -60,7 +47,6 @@ namespace Runtime.Controllers.Enemy
         {
             return PoolSignals.Instance.onGetObjectFromPool(poolObjectType);
         }
-
 
     }
 }

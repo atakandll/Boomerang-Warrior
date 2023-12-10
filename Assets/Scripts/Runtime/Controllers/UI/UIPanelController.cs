@@ -6,19 +6,12 @@ namespace Runtime.Controllers.UI
 {
     public class UIPanelController : MonoBehaviour
     {
-        #region Self Variables
+        [SerializeField]
+        private List<GameObject> uiPanels = new List<GameObject>();
 
-        #region Serialized Variables
-
-        [SerializeField] private List<GameObject> uiPanels = new List<GameObject>();
-
-        #endregion
-
-        #endregion
-
-        internal void ChangePanel(UIPanelTypes panelTypes, bool panelStatus)
+        internal void ChangePanel(UIPanelTypes panelType, bool panelStatus)
         {
-            uiPanels[(int)panelTypes].SetActive(panelStatus);
+            uiPanels[(int)panelType].SetActive(panelStatus);
         }
     }
 }

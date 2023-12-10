@@ -3,7 +3,7 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct PlayerSpawnData
+    public class PlayerSpawnData
     {
         
     }

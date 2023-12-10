@@ -6,55 +6,42 @@ namespace Runtime.Managers
 {
     public class InputManager : MonoBehaviour
     {
-        #region Self Variables
-
-        #region Serialized Variables
-
-        [SerializeField] private FloatingJoystick floatingJoystick;
-        
-        #endregion
-
-        #region Private Variables
-        
         private bool _isFirstTouchTaken;
+
+        [SerializeField]
+        private FloatingJoystick floatingJoystick;
+
         private bool _hasTouch;
-        private bool _isReleased;
+
+        private bool _isRelease;
         private bool _isClick;
-        
-        #endregion
 
-        #endregion
-
-        private void OnEnable()
-        {
-            SubscribeEvents();
-        }
+        private void OnEnable() => SubscribeEvents();
 
         private void SubscribeEvents()
         {
-           CoreGameSignals.Instance.onPlay += OnPlay;
-           CoreGameSignals.Instance.onReset += OnReset;
+
+            CoreGameSignals.Instance.onPlay += OnPlay;
+            CoreGameSignals.Instance.onReset += OnReset;
         }
 
         private void UnsubscribeEvents()
         {
             CoreGameSignals.Instance.onPlay -= OnPlay;
             CoreGameSignals.Instance.onReset -= OnReset;
-            
         }
 
-        private void OnDisable()
-        {
-            UnsubscribeEvents();
-        }
+        private void OnDisable() => UnsubscribeEvents();
 
-        private void Update()
+        private void FixedUpdate()
         {
-            if (true)
+            if (true/*_isFirstTouchTaken*/)
             {
                 float directionAngel = Mathf.Rad2Deg * Mathf.Atan2(floatingJoystick.Horizontal, floatingJoystick.Vertical);
 
                 Vector3 joystickDirection = new Vector3(floatingJoystick.Horizontal,0, floatingJoystick.Vertical);
+                
+
 
                 if (joystickDirection.magnitude>0)
                 {
@@ -86,6 +73,7 @@ namespace Runtime.Managers
         private void OnReset() => StopToInput();
 
         private void StartToInput() => _isFirstTouchTaken = true;
+
         private void StopToInput() => _isFirstTouchTaken = false;
 
 

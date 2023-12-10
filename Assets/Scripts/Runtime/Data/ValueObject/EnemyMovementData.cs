@@ -5,8 +5,9 @@ using UnityEngine;
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct EnemyMovementData
+    public class EnemyMovementData
     {
-        [Range(1f, 5f)] public float Speed;
+        [Range(1f, 5f)]
+        public float speed;
     }
 }

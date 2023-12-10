@@ -10,42 +10,27 @@ namespace Runtime.Managers
 {
     public class BoomerangManager : MonoBehaviour, IPushObject
     {
-        #region Self Variables
+       public float Damage { get; set; }
 
-        #region Public Variables
+        public string DataPath => "Data/Cd_BoomerangData";
 
-        public float Damage { get; set; }
+        [SerializeField]
+        private BoomerangMovementController boomerangMovementController;
 
-
-        #endregion
-
-        #region Serialized Variables
-        
-        [SerializeField] private BoomerangMovementController boomerangMovementController;
-
-        #endregion
-
-        #region Private Variables
-        
-        private float _timer;
         private BoomerangData _boomerangData;
-        private string dataPath = "Data/CD_BoomerangData";
 
+        private float _timer;
 
-        #endregion
-
-        #endregion
-        
         private void Awake()
         {
             GetData();
         }
 
-        private void GetData() => _boomerangData = Resources.Load<CD_BoomerangData>(dataPath).BoomerangData;
+        private void GetData() => _boomerangData = Resources.Load<Cd_BoomerangData>(DataPath).BoomerangData;
 
         public void SetData(Transform target)
         {
-            Damage = _boomerangData.Damage;
+            Damage = _boomerangData.damage;
 
             boomerangMovementController.SetData(_boomerangData, target);
         }
@@ -82,7 +67,7 @@ namespace Runtime.Managers
 
         private void SetSelfData()
         {
-            Damage = _boomerangData.Damage;
+            Damage = _boomerangData.damage;
 
             Vector3 startPos = transform.position;
 

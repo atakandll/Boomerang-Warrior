@@ -7,9 +7,13 @@ namespace Runtime.Signals
     public class UISignals : MonoSingleton<UISignals>
     {
         public UnityAction<UIPanelTypes> onOpenPanel = delegate { };
+
         public UnityAction<UIPanelTypes> onClosePanel = delegate { };
-        public UnityAction<int> onlastCoinScore = delegate { };
-        public UnityAction<float> onHealth = delegate { };
-        public UnityAction<int> onLastDeathScore = delegate { };
+
+        public UnityAction<int> onPrintLastGoldScore = delegate { };
+
+        public UnityAction<float> onHealthDecrase = delegate { };
+
+        internal UnityAction<int> onPrintLastDeathScore = delegate { };
     }
 }

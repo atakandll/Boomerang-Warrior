@@ -8,31 +8,15 @@ namespace Runtime.Controllers.Player
 {
     public class PlayerAttackController : MonoBehaviour, IPullObject
     {
-        #region Self Variables
-
-        #region Public Variables
-
-        public bool IsActive { get; set; }
-        public GameObject TargetGameObject { get; set; }
-
-        #endregion
-
-        #region Serialized Variables
-
-        [SerializeField] private GameObject spawnPointsBoomerang;
-        
-
-
-        #endregion
-
-        #region Private Variables
+        [SerializeField]
+        private GameObject spawnPointForBoomerang;
 
         private float _timer;
 
-        #endregion
+        public bool IsActive { get; set; }
 
-        #endregion
-        
+        public  GameObject TargetObject { get; set; }
+
         public void TriggerAction()
         {
             Attack();
@@ -50,7 +34,7 @@ namespace Runtime.Controllers.Player
 
             if (boomerang.TryGetComponent(out BoomerangManager boomerangManager))
             {
-                boomerangManager.SetData(TargetGameObject.transform);
+                boomerangManager.SetData(TargetObject.transform);
             }
         }
         public GameObject PullFromPool(PoolObjectType poolObjectType)

@@ -9,29 +9,21 @@ namespace Runtime.Controllers.Player
 {
     public class PlayerPhysicController : MonoBehaviour, IPushObject
     {
-        #region Self Variables
+        [SerializeField]
+        private PlayerManager playerManager;
 
-        #region Serialized Variables
-        
-        [SerializeField] private PlayerManager playerManager;
-        
-
-        #endregion
-
-        #endregion
-        
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out BulletPhysicController bulletPyhsicController))
             {
-                playerManager.HitDamage(bulletPyhsicController.TakeDamage());
+                playerManager.HitDamager(bulletPyhsicController.TakeDamage());
             }
 
             if (other.CompareTag("Coin"))
             {
                 playerManager.HitCoin();
 
-                PushToPool(PoolObjectType.Coin, other.transform.parent.gameObject);
+                PushToPool(PoolObjectType.SmallGold, other.transform.parent.gameObject);
             }
         }
 

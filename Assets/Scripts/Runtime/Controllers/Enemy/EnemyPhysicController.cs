@@ -9,16 +9,11 @@ namespace Runtime.Controllers.Enemy
 {
     public class EnemyPhysicController : MonoBehaviour, IEnemyable
     {
-        #region Self Variables
+        [SerializeField]
+        private EnemyManager enemyManager;
 
-        #region Serialized Variables
-
-        [SerializeField] private EnemyManager enemyManager;
-        [SerializeField] new Collider collider;
-
-        #endregion
-
-        #endregion
+        [SerializeField]
+        private new Collider collider;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -26,11 +21,13 @@ namespace Runtime.Controllers.Enemy
             {
                 enemyManager.EnterDetectArea();
             }
+
             if (other.TryGetComponent(out BoomerangPhysicController boomerangPhysicController))
             {
                 enemyManager.OnHitBoomerang();
             }
         }
+
         public GameObject GetHitEnemy()
         {
             return transform.parent.gameObject;

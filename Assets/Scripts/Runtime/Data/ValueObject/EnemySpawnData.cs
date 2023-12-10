@@ -4,10 +4,12 @@ using UnityEngine;
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct EnemySpawnData
+    public class EnemySpawnData
     {
-        public int SpawnLimit;
-        public int SpawnRange;
-        public GameObject EnemySpawnZone;
+        public int spawnLimit;
+
+        public int spawnRange;
+
+        public GameObject enemySpawnZone;
     }
 }

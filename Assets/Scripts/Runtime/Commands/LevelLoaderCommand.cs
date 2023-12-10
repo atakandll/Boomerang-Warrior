@@ -4,9 +4,9 @@ namespace Runtime.Commands
 {
     public class LevelLoaderCommand : MonoBehaviour
     {
-        public void Execute(int levelID, Transform levelHolder)
+        public void InitializeLevel(int _levelID, Transform levelHolder)
         {
-            Instantiate(Resources.Load<GameObject>($"Prefabs/LevelPrefabs/Level {levelID}"), levelHolder);
+            Instantiate(Resources.Load<GameObject>($"Prefabs/LevelPrefabs/Level {_levelID}"), levelHolder);
         }
     }
 }

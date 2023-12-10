@@ -29,12 +29,16 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - Purchasing.Common
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - Cinemachine
+    - NavMeshComponentsExamples
+    - Purchasing.Common
+    - NavMeshComponents
     - PPv2URPConverters
     - Analytics
+    - NavMeshComponentsEditor
+    - NavMeshComponentsExamplesEditor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

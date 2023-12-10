@@ -8,39 +8,27 @@ using UnityEngine.Purchasing;
 namespace Runtime.Controllers.Enemy
 {
     public class EnemyAnimationController : MonoBehaviour
-    {
-        #region Self Variables
+    { public bool IsActive { private get; set; }
 
-        #region Public Variables
+        [SerializeField]
+        private NavMeshAgent navMeshAgent;
 
-        public bool IsActive { get; set; }
-        
+        [SerializeField]
+        private Animator animator;
 
-        #endregion
+        [SerializeField]
+        private EnemyManager enemyManager;
 
-        #region Serialized Variables
-
-        [SerializeField] private Animator animator;
-        [SerializeField] private EnemyManager enemyManager;
-        
-        #endregion
-
-        #region Private Variables
-        
         private EnemyAnimationData _enemyAnimationData;
 
-
-        #endregion
-
-        #endregion
-        
         internal void SetData(EnemyAnimationData enemyAnimationData)
         {
             _enemyAnimationData = enemyAnimationData;
         }
-        public void OnEnemyDead()
+
+        public void OnEnemyDying()
         {
-            enemyManager.OnEnemyDead();
+            enemyManager.OnEnemyDying();
         }
 
         public void OnReadyToAttack()
@@ -53,26 +41,28 @@ namespace Runtime.Controllers.Enemy
         {
             enemyManager.ActiveteController();
 
-            ChangeAnimation(EnemyAnimationTypes.Run);
+            ChangeAnimation(EnemyAnimationType.Run);
         }
 
         public void TriggerAction()
         {
-            ChangeAnimation(EnemyAnimationTypes.Run);
-        }
-        public void PlayAttackAnim()
-        {
-            ChangeAnimation(EnemyAnimationTypes.Attack);
+            ChangeAnimation(EnemyAnimationType.Run);
         }
 
-        public void PlayDeadAnim()
+        public void PlayAttackAnimation()
         {
-            ChangeAnimation(EnemyAnimationTypes.Dead);
+            ChangeAnimation(EnemyAnimationType.Attack);
         }
 
-        private void ChangeAnimation(EnemyAnimationTypes types)
+        public void PlayDyingAnimation()
         {
-            animator.Play(types.ToString());
+
+            ChangeAnimation(EnemyAnimationType.Die);
+        }
+
+        private void ChangeAnimation(EnemyAnimationType enemyAnimationType)
+        {
+            animator.Play(enemyAnimationType.ToString());
         }
     }
 }

@@ -6,54 +6,47 @@ namespace Runtime.Controllers.Player
 {
     public class PlayerHealthController : MonoBehaviour
     {
-        #region Self Variables
+        [SerializeField]
+        private PlayerManager playerManager;
 
-        #region Serialized Variables
-
-        [SerializeField] private PlayerManager playerManager;
-
-        #endregion
-
-        #region Private Variables
-        
         private float _health;
-        private float _maxHealth;
-        private float _damage;
-        private float _deadHealth;
+        private int _deadHealt;
+        private int _maxHealt;
+        private int _damage;
 
-        #endregion
-
-        #endregion
-
-        internal void SetData(PlayerHealthData playerHealthData)
+        internal void SetData(PlayerHealtData playerHealtData)
         {
-            _maxHealth = playerHealthData.MaxHealth;
-            _health = _maxHealth;
-            OnHealthChange(_health);
+            _maxHealt = playerHealtData.MaxHealth;
+            _health = _maxHealt;
+            OnHealthUpdate(_health);
         }
 
         internal void SetDamage(int damage)
         {
             _damage = damage;
-            _deadHealth = _maxHealth / damage;
+
+            _deadHealt = _maxHealt / damage;
         }
 
         public void OnTakeDamage()
         {
             _health -= _damage;
-            
+
             if (_health <= 0)
             {
-                OnHealthChange(_health);
+                OnHealthUpdate(_health);
+
                 playerManager.PlayerDead();
+
                 return;
             }
-            OnHealthChange(_health);
+
+            OnHealthUpdate(_health);
         }
 
-        private void OnHealthChange(float healthValue)
+        private void OnHealthUpdate(float healthValue)
         {
-            playerManager.OnHealthChange(healthValue);
+            playerManager.OnHealtDecrase(healthValue);
         }
     }
 }

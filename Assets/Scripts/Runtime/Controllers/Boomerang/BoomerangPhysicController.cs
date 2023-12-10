@@ -7,16 +7,9 @@ namespace Runtime.Controllers.Boomerang
 {
     public class BoomerangPhysicController : MonoBehaviour
     {
-        #region Self Variables
+        [SerializeField]
+        private BoomerangManager boomerangManager;
 
-        #region Serialized Variables
-
-        [SerializeField] private BoomerangManager boomerangManager; 
-
-        #endregion
-
-        #endregion
-        
         private void OnTriggerEnter(Collider other)
         {
             PushToPool(PoolObjectType.Bullet, transform.parent.gameObject);

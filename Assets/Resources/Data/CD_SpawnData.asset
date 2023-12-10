@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c2f2716c535436495298d14fca876ef, type: 3}
-  m_Name: CD_SpawnData
+  m_Name: Cd_SpawnData
   m_EditorClassIdentifier: 
   SpawnData:
-    EnemySpawnData:
-      SpawnLimit: 10
-      SpawnRange: 2
-      EnemySpawnZone: {fileID: 381838514777014987, guid: cf385ee8a729e344c977e425be100023,
+    enemySpawnData:
+      spawnLimit: 10
+      spawnRange: 2
+      enemySpawnZone: {fileID: 381838514777014987, guid: cf385ee8a729e344c977e425be100023,
         type: 3}
-    CoinSpawnData:
-      SpawnLimit: 100
-      CoinSpawnZone: {fileID: 381838514777014987, guid: cf385ee8a729e344c977e425be100023,
+    collectableSpawnData:
+      spawnLimit: 100
+      collectableSpawnZone: {fileID: 381838514777014987, guid: cf385ee8a729e344c977e425be100023,
         type: 3}

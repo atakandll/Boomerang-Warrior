@@ -3,11 +3,12 @@
 namespace Runtime.Data.ValueObject
 {
     [Serializable]
-    public struct SpawnData
+    public class SpawnData
     {
-        public EnemySpawnData EnemySpawnData;
-        public CoinSpawnData CoinSpawnData;
-        public PlayerSpawnData PlayerSpawnData;
-        
+        public EnemySpawnData enemySpawnData;
+
+        public PlayerSpawnData playerSpawnData;
+
+        public CollectableSpawnData collectableSpawnData;
     }
 }
