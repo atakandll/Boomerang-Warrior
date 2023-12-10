@@ -104,7 +104,7 @@ namespace Runtime.Managers
             enemyAnimationController.PlayDeadAnim();
         }
 
-        internal void OnEnemyDying()
+        internal void OnEnemyDead()
         {
 
             PushToPool(PoolObjectType.Enemy, gameObject);

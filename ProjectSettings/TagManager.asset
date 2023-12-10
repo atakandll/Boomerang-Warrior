@@ -15,13 +15,13 @@ TagManager:
   - Boomerang
   - BulletPhysic
   - BoomerangPhysic
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - PlayerDetect
+  - PlayerPhysic
+  - Enemy
+  - EnemyPhysic
+  - Coin
   - 
   - 
   - 
