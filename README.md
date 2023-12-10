@@ -1,4 +1,4 @@
-# Boomerang Survivor
+# Boomerang Warrior
 
 Watch the `gameplay` of the Boomerang Survivor: https://www.youtube.com/watch?v=CjvDloQMvgk  
 
