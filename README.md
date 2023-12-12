@@ -29,9 +29,9 @@ Demonstration of advanced programming paradigms and design patterns, crafted to 
 ## Design Pattern
 - `Singleton Pattern:` For managing global game states.
 - `Observer Pattern:` To efficiently handle events and notifications within the game.
-- `State-Machine Pattern:` For managing character states and behaviors.
+- `State-Machine Pattern:` For managing character and enemy animation states and behaviors.
 - `Object Pooling Pattern:` To optimize performance, especially in rendering and managing game objects.
-- `Command Pattern:` For handling character actions and inputs
+- `Command Pattern:` For handling level initializations.
 - `Facade Pattern:` To simplify complex subsystem interactions, making them more manageable.
   
 
